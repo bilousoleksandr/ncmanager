@@ -66,53 +66,33 @@ public final class PreferencesManager {
             }
         }
                 
-        CFPreferencesSetAppValue(
-            Constants.Keys.apps as CFString,
-            apps as NSArray,
-            Constants.ncprefsBundleID as CFString
-        )
-        CFPreferencesAppSynchronize(Constants.ncprefsBundleID as CFString)
+        saveAppChanges(apps: apps)
+    }
+    
+    public func disableNotifications(for applications: ApplicationType) throws {
+        let apps = try preferencesList()
+        apps.forEach { app in
+            let flag = app.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
+            let newFlag = flag & ~NotificationFlag.allowNotifications.rawValue & ~NotificationStyle.none.flag.rawValue
+            if applications == .all {
+                app.setValue(newFlag, forKey: Constants.Keys.flags)
+                return
+            }
+            
+            guard let bundle = app.string(forKey: Constants.Keys.bundleID),
+                  bundle.hasPrefix("_SYSTEM_CENTER_") else {
+                return
+            }
+            app.setValue(newFlag, forKey: Constants.Keys.flags)
+        }
         
-        NotificationCenterController.relaunch()
+        saveAppChanges(apps: apps)
     }
     
     private func test(_ flag: Int64, _ newFlag: NotificationFlag, isTrue: Bool) -> Int64 {
         return isTrue ? flag | newFlag.rawValue : flag & ~newFlag.rawValue
     }
     
-    private func changeNotificationSettings(
-        bundleID: BundleID?,
-        flag: Int64,
-        preview: NotificationPreviewType? = .none,
-        grouping: NotificationGrouping? = .none
-    ) throws {
-        let apps = try preferencesList().compactMap { app in
-            let existingFlag = app.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-            let newFlag = existingFlag & flag
-            
-            guard let bundleID = bundleID else {
-                app.setValue(newFlag, forKey: Constants.Keys.flags)
-                preview.flatMap { app.setValue($0.rawValue, forKey: Constants.Keys.contentVisibility) }
-                grouping.flatMap { app.setValue($0.rawValue, forKey: Constants.Keys.grouping) }
-                return app
-            }
-            
-            if app.string(forKey: Constants.Keys.bundleID) == bundleID {
-                app.setValue(newFlag, forKey: Constants.Keys.flags)
-                preview.flatMap { app.setValue($0.rawValue, forKey: Constants.Keys.contentVisibility) }
-                grouping.flatMap { app.setValue($0.rawValue, forKey: Constants.Keys.grouping) }
-            }
-            return app
-        }
-        
-        
-        CFPreferencesSetAppValue(
-            Constants.Keys.apps as CFString,
-            apps as NSArray,
-            Constants.ncprefsBundleID as CFString
-        )
-        CFPreferencesAppSynchronize(Constants.ncprefsBundleID as CFString)
-    }
     
     private func preferencesList() throws -> [NSDictionary] {
         let plistURL = FileManager.default
@@ -121,5 +101,15 @@ public final class PreferencesManager {
         let plistInfo = try NSDictionary(contentsOf: plistURL, error: ())
         let apps = plistInfo.object(forKey: Constants.Keys.apps) as? [NSDictionary]
         return apps ?? []
+    }
+    
+    private func saveAppChanges(apps: [NSDictionary]) {
+        CFPreferencesSetAppValue(
+            Constants.Keys.apps as CFString,
+            apps as NSArray,
+            Constants.ncprefsBundleID as CFString
+        )
+        CFPreferencesAppSynchronize(Constants.ncprefsBundleID as CFString)
+        NotificationCenterController.relaunch()
     }
 }

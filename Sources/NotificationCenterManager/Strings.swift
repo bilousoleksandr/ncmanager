@@ -12,6 +12,7 @@ enum Strings {
         static let bundleID = "Target bundle identifier to change preferences. If not specified, all applications settings will be changes"
         static let bundleIDValue = "Bundle identifier. Example: com.apple.Mail"
         static let showBadgeIcon = "Badge application icon in notifications"
+        static let disableNotifications = "Disable notifications for bundles and set its style to 'none' value"
         static let soundNotification = "Allow play sound for notifications"
         static let allowNotifications = "Allow notifications for application"
         static let allowCriticalAlerts = "Allow critical alerts for application"
@@ -22,5 +23,6 @@ enum Strings {
         static let groupingValue = "Value: 'off', 'auto' or 'app'"
         static let boolValue = "Value: 'true' or 'false'"
         static let alertStyleValue = "Value: 'none', 'alerts' or 'banners'"
+        static let appsTypeValue = "Value: 'all' or 'system'"
     }
 }

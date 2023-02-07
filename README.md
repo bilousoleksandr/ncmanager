@@ -14,7 +14,7 @@ Command-Line Interface for managing macOS Notification Center. It allows to:
 
 ## How it works
 
-`ncmanager` deals with `com.apple.ncprefs.plist`, localed at directory `$HOME/Library/Preferences`. CLI writes new options to specified field, synchronise application preferences and relaunchs NotificationCenter application.
+`ncmanager` deals with `com.apple.ncprefs.plist`, localed at directory `$HOME/Library/Preferences`. CLI writes new options to specified field, synchronise application preferences and relaunches NotificationCenter application.
 
 > Bundle preferences changes during a few seconds after the command is executed.
 
@@ -80,21 +80,26 @@ Also you can build CLI locally. To do this, follow next commands:
     $ ncmanager write <bundle-id> [--icon <icon>] [--sound <sound>] [--notifications <notifications>] [--critical-alert <critical-alert>] [--alert-style <alert-style>] [--preview <preview>] [--grouping <grouping>]
 ```
 
-### Read all registed identifier
+
+### Read preferences
+
+`ncmanager` supports reading all registered identifier in Notification Center and concrete bundle preferences with tiny output.
 
 ```bash
-    $ ncmanager read identifiers
-```
-
-### Read bundle preferences with command and get tiny output
-
-```bash
-    $ ncmanager read bundle com.apple.Mail
+    $ ncmanager read <subcommand>
 ```
 
 ### Output format
 
 ![](Resources/Output.png)
+
+### Disable notifications
+
+Command disables all notifications for applications with bundle identifier containing prefix `_SYSTEM_CENTER_` or all applications, depends on selected input.
+
+```bash
+    $ ncmanager disable --apps-type <apps-type>  
+```
 
 ## References and Credits
 
