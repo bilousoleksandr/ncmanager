@@ -94,7 +94,7 @@ Also you can build CLI locally. To do this, follow next commands:
 
 ### Output format
 
-![Classes and interfaces](Resources/output.png)
+![](Resources/Output.png)
 
 ## References and Credits
 
