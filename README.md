@@ -55,13 +55,7 @@ Every bundle has additional options for notification's preview and grouping. Key
 
 ## Installation 
 
-`ncmanagar` is available via Homebrew:
-
-```bash
-    $ brew install ncmanager 
-```
-
-Also you can build CLI locally. To do this, follow next commands:
+`ncmanager` is available in release artefacts. Also you can build CLI locally. To do this, follow next commands:
 
 ```bash
     $ git clone NotificationCenterManager 
@@ -70,6 +64,19 @@ Also you can build CLI locally. To do this, follow next commands:
 ```
 
 > Xcode 14.0 and higher is required to build package products.
+
+### Swift Package Manager
+
+You can integrate `ncmanager` in your Xcode project via SPM. Add the following dependency in your `Package.swift`:
+
+```swift
+dependencies: [
+  .package(
+    name: "ncmanager",
+    url: "https://github.com/AlexandrBilous/ncmanager.git",
+    from: "1.0.0")
+]
+```
 
 ## Usage 
 
