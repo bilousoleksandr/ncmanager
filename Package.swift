@@ -14,7 +14,7 @@ let package = Package(
             targets: ["NotificationCenterCore"]
         ),
         .executable(
-            name: "NCManager",
+            name: "ncmanager",
             targets: ["NotificationCenterManager"]
         )
     ],
