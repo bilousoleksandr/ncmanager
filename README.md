@@ -10,7 +10,8 @@ Command-Line Interface for managing macOS Notification Center. It allows to:
 - manage concrete application settings:
     - notifications style;
     - notifications preview;
-    - enable/disable sound, badge app icons, critical alerts.
+    - enable/disable sound, badge app icons, critical alerts;
+- disable system/all known apps notifications.
 
 ## How it works
 
