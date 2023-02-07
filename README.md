@@ -1,5 +1,8 @@
 # NotificationCenterManager
 
+![](https://img.shields.io/badge/os-macOS%2010.15%2B-brightgreen)  
+![](https://img.shields.io/badge/arch-x86__64%2C%20arm-orange)
+
 Command-Line Interface for managing macOS Notification Center. It allows to:
 - read all registered bundles in Notification Center;
 - read bundle preferences;
@@ -8,11 +11,6 @@ Command-Line Interface for managing macOS Notification Center. It allows to:
     - notifications style;
     - notifications preview;
     - enable/disable sound, badge app icons, critical alerts.
-    
-## Specification
-
-- Supports both arm64 and x86_64
-- Compatible with macOS 10.15(Catalina) and higher.
 
 ## How it works
 
