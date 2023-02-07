@@ -46,19 +46,19 @@ public final class PreferencesManager {
             switch option {
             case .showBadgeIcon(let shouldBadge):
                 let flag = dict.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-                dict.setValue(test(flag, .badgeAppIcon, isTrue: shouldBadge), forKey: Constants.Keys.flags)
+                dict.setValue(getFlag(flag, .badgeAppIcon, shouldBadge), forKey: Constants.Keys.flags)
             case .allowSoundNotification(let allowSound):
                 let flag = dict.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-                dict.setValue(test(flag, .soundNotification, isTrue: allowSound), forKey: Constants.Keys.flags)
+                dict.setValue(getFlag(flag, .soundNotification, allowSound), forKey: Constants.Keys.flags)
             case .notificationStyle(let notificationStyle):
                 let flag = dict.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-                 dict.setValue(test(flag, notificationStyle.flag, isTrue: notificationStyle != .none), forKey: Constants.Keys.flags)
+                 dict.setValue(getFlag(flag, notificationStyle.flag, notificationStyle != .none), forKey: Constants.Keys.flags)
             case .allowNotifications(let isAllowed):
                 let flag = dict.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-                dict.setValue(test(flag, .allowNotifications, isTrue: isAllowed), forKey: Constants.Keys.flags)
+                dict.setValue(getFlag(flag, .allowNotifications, isAllowed), forKey: Constants.Keys.flags)
             case .allowCriticalAlerts(let isAllowed):
                 let flag = dict.value(forKey: Constants.Keys.flags) as? Int64 ?? 0
-                dict.setValue(test(flag, .criticalAlerts, isTrue: isAllowed), forKey: Constants.Keys.flags)
+                dict.setValue(getFlag(flag, .criticalAlerts, isAllowed), forKey: Constants.Keys.flags)
             case .preview(let type):
                 dict.setValue(type.rawValue, forKey: Constants.Keys.contentVisibility)
             case .grouping(let type):
@@ -89,8 +89,8 @@ public final class PreferencesManager {
         saveAppChanges(apps: apps)
     }
     
-    private func test(_ flag: Int64, _ newFlag: NotificationFlag, isTrue: Bool) -> Int64 {
-        return isTrue ? flag | newFlag.rawValue : flag & ~newFlag.rawValue
+    private func getFlag(_ flag: Int64, _ newFlag: NotificationFlag, _ and: Bool) -> Int64 {
+        return and ? flag | newFlag.rawValue : flag & ~newFlag.rawValue
     }
     
     

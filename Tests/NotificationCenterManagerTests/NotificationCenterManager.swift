@@ -11,7 +11,7 @@ import XCTest
 final class NotificationCenterManagerTests: XCTestCase {
     func testExample() throws {
         let bundleID = "com.apple.Maps"
-        NotificationCenterManager.main([
+        NCManager.main([
             "write",
             bundleID,
             "--notifications",
